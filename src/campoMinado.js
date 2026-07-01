@@ -28,6 +28,7 @@ export class CampoMinado extends HTMLElement {
 		this.shadowRoot.appendChild(this.template.content.cloneNode(true));
 
 		this.gerarMinas(end);
+    this.detectarInputs();
 		this.style();
 	}
 
@@ -48,13 +49,21 @@ export class CampoMinado extends HTMLElement {
         border-radius: 0.2rem;
         width: 2rem;
         aspect-ratio: 1;
+        background: var(--accent);
       }
       .cell:hover {
         filter: brightness(0.9);
         cursor: pointer;
       }
-      .mine {
+      .cell.mine {
         background-color: #ff0000;
+      }
+      .cell.cavado {
+        background: var(--accent-bg);
+      }
+      .cell.cavado:hover {
+        pointer-events: none;
+        cursor: default;
       }
       `;
 		this.shadowRoot.appendChild(style);
@@ -71,7 +80,53 @@ export class CampoMinado extends HTMLElement {
 		}
 	}
 
+  detectarInputs() {
+    const cell = this.shadowRoot.querySelectorAll('.cell');
+    cell.forEach(element => {
+      element.addEventListener('click', () => {
+        this.verificarArredores(element)
+      });
+    });
+  }
+
+  verificarArredores(btn) {
+    if (btn.classList.contains("mine")) {
+      // fim de jogo
+      return;
+    }
+    else {
+      this.cavar(btn);
+    }
+
+    let row = btn.classList[1].slice(3);
+    let col = btn.classList[2].slice(3);
+    
+    console.log(row, col);
+
+
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) continue;
+        const adjacentRow = parseInt(row) + i;
+        const adjacentCol = parseInt(col) + j;
+        const adjacentCell = this.shadowRoot.querySelector(`.cell.row${adjacentRow}.col${adjacentCol}`);
+        if(adjacentCell === null) { continue;}
+        if (adjacentCell.classList.contains('cavado')) {
+          continue;
+        }
+        if (adjacentCell && adjacentCell.classList.contains("mine")) {
+          // nao fazer nada
+        }
+        else {
+          this.cavar(adjacentCell);
+        }
+      }
+    }
+  }
   
+  cavar(cell) {
+    cell.classList.add('cavado');
+  }
 }
 
 customElements.define("campo-minado", CampoMinado);
