@@ -89,17 +89,34 @@ p {
 
 body {
   position: relative;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 main {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   height: 100%;
+}
+
+header {
+  padding: 2rem 0;
+  align-self: center;
 }
 
 footer {
   display: flex;
   justify-content: space-around;
   bottom: 0;
+  padding: 2rem 0;
+  flex-wrap: wrap;
+}
+footer > * {
+  padding: 1rem 0.8rem;
 }
