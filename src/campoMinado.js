@@ -100,6 +100,8 @@ export class CampoMinado extends HTMLElement {
 
     let row = btn.classList[1].slice(3);
     let col = btn.classList[2].slice(3);
+
+    let bombas = 0;
     
     console.log(row, col);
 
@@ -115,13 +117,15 @@ export class CampoMinado extends HTMLElement {
           continue;
         }
         if (adjacentCell && adjacentCell.classList.contains("mine")) {
-          // nao fazer nada
+          bombas++;
+          
         }
         else {
           this.cavar(adjacentCell);
         }
       }
     }
+    btn.textContent = bombas > 0 ? bombas : '';
   }
   
   cavar(cell) {
