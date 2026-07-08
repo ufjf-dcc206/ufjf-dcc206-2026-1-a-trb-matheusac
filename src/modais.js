@@ -11,6 +11,7 @@ class Modais extends HTMLElement {
         this.tipo = "";
 
         this.build();
+        this.escutarEventos();
     }
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "tipo") {
@@ -50,26 +51,26 @@ class Modais extends HTMLElement {
             }
           .modal {
             min-width: 20vw;
-            min-height: 14vh;
+            min-height: 18vh;
             padding: 1rem;
 
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-around;
+            justify-content: center;
 
-            border-radius: 1.6rem;
+            border-radius: 1.8rem;
             background: #ababab;
             z-index: 6;
           }
           .modal p {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
           }
           .modal button {
             border: none;
-            border-radius: 0.8rem;
+            border-radius: 1.4rem;
             font-size: 1.2rem;
-            padding: 0.2rem 0.8rem;
+            padding: 0.6rem 0.8rem;
           }
           button:hover {
             cursor: pointer;
@@ -79,10 +80,37 @@ class Modais extends HTMLElement {
             color: red;
             font-style: normal;
           }
+
+          :host .close {
+            display: none;
+            pointer-events: none;
+          }
           
         </style>
       `;
+
+      // const globalStyle = document.createElement('style')
+      // globalStyle.innerHTML = `
+      //   <style>
+      //     .close {
+      //     display: none;
+      //       pointer-events: none;
+      //     }
+        
+      //   </style>
+      // `;
+      // document.head.appendChild(globalStyle);
+
         this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+    }
+    escutarEventos() {
+      const btn = this.shadowRoot.querySelector('button');
+      const modalContainer = document.querySelector('modais-jogo');
+
+      btn.addEventListener('click', () => {
+        modalContainer.classList.toggle('close')
+      });
+
     }
 }
 
