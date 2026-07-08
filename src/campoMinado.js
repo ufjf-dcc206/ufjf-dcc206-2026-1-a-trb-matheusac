@@ -307,12 +307,20 @@ export class CampoMinado extends HTMLElement {
 
 	gameWin() {
 		setTimeout(() => {
-            alert("Parabéns! Você venceu!");
-		}, 300);
+            alert("Parabéns! Você venceu! :)");
+        }, 120);
+        const jogo = this.shadowRoot.querySelector("#grid");
+        jogo.style.pointerEvents = "none";
 	}
 
 	gameOver() {
-		alert("Game Over! You lost!");
+        setTimeout(() => {
+            alert("Você perdeu! :(");
+        }, 120);
+
+        const jogo = this.shadowRoot.querySelector("#grid");
+        jogo.style.pointerEvents = "none";
+
 		// let modal = this.shadowRoot.querySelector("modais-jogo");
 
 		// if (!modal) {
@@ -325,6 +333,8 @@ export class CampoMinado extends HTMLElement {
 	}
 
     
+
+
 }
 
 customElements.define("campo-minado", CampoMinado);
