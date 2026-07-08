@@ -1,13 +1,13 @@
 export class CampoMinado extends HTMLElement {
 	static get observedAttributes() {
-		return ["cells"]; // vou usar dps
+		return ["rows", "cols", "bombs"]; // vou usar dps
 	}
 	constructor() {
 		super();
 
-		this.rows = 8;
-		this.cols = 10;
-		this.bombs = 10;
+		this.rows = this.getAttribute("rows") || 8;
+		this.cols = this.getAttribute("cols") || 10;
+		this.bombs = this.getAttribute("bombs") || 10;
 		this.board = [];
 		this.flags = this.bombs;
 
@@ -23,7 +23,7 @@ export class CampoMinado extends HTMLElement {
 		this.style();
 		this.uiBuild();
 
-        this.resetBtn();
+		this.resetBtn();
 		this.resetGame();
 	}
 
@@ -126,6 +126,7 @@ export class CampoMinado extends HTMLElement {
 			return;
 		}
 		this.cavar(cell);
+		this.checkGameEnd();
 	}
 
 	cavar(cell) {
@@ -282,12 +283,12 @@ export class CampoMinado extends HTMLElement {
 	// updates
 
 	resetGame() {
-        if (this.shadowRoot.querySelector("#grid")) {
-            this.shadowRoot.querySelector("#grid").remove();
-        }
-        this.rows = 8;
-		this.cols = 10;
-		this.bombs = 10;
+		if (this.shadowRoot.querySelector("#grid")) {
+			this.shadowRoot.querySelector("#grid").remove();
+		}
+		this.rows = this.getAttribute("rows") || 8;
+		this.cols = this.getAttribute("cols") || 10;
+		this.bombs = this.getAttribute("bombs") || 10;
 		this.board = [];
 		this.flags = this.bombs;
 		this.runGameData();
@@ -295,20 +296,35 @@ export class CampoMinado extends HTMLElement {
 	}
 
 	checkGameEnd() {
+		const cells = this.shadowRoot.querySelector(
+			".cell:not(.cavado):not(.mine)",
+		);
+		if (!cells) {
+			this.gameWin();
+		}
+		console.log("checando...", cells);
+	}
 
-    }
+	gameWin() {
+		setTimeout(() => {
+            alert("Parabéns! Você venceu!");
+		}, 300);
+	}
 
 	gameOver() {
-		let modal = this.shadowRoot.querySelector("modais-jogo");
+		alert("Game Over! You lost!");
+		// let modal = this.shadowRoot.querySelector("modais-jogo");
 
-		if (!modal) {
-			modal = document.createElement("modais-jogo");
-			modal.addEventListener("restart-game", () => this.resetGame());
-			this.shadowRoot.appendChild(modal);
-		}
+		// if (!modal) {
+		// 	modal = document.createElement("modais-jogo");
+		// 	modal.addEventListener("restart-game", () => this.resetGame());
+		// 	this.shadowRoot.appendChild(modal);
+		// }
 
-		modal.setAttribute("tipo", tipo);
+		// modal.setAttribute("tipo", tipo);
 	}
+
+    
 }
 
 customElements.define("campo-minado", CampoMinado);
