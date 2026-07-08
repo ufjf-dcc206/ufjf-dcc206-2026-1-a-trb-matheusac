@@ -204,17 +204,17 @@ export class CampoMinado extends HTMLElement {
             text-decoration: none;
             width: 2rem;
             aspect-ratio: 1;
-            background: var(--accent);
+            background: var(--cell);
         }
         .cell:hover {
             filter: brightness(0.9);
             cursor: pointer;
         }
         .cell.mine {
-            background: #ff0000;
+            background: var(--alert);
         }
         .cell.cavado {
-            background: var(--accent-bg);
+            background: var(--dig);
         }
         .cell.cavado:hover {
             pointer-events: none;
@@ -332,7 +332,7 @@ export class CampoMinado extends HTMLElement {
 		// modal.setAttribute("tipo", tipo);
 	}
 
-    
+
 
 
 }
