@@ -15,6 +15,7 @@
   --dig: #c0c0c080;
 	--safe: #54c862;
 	--alert: #e04747;
+	--alert-50: #e0474780;
 	--background: #e1d6ca;
 	--txt: #131212;
 	--modal-bg: #171922cc;
@@ -57,6 +58,7 @@
     --dig: #8E8E8E80;
 		--safe: #299736;
 		--alert: #9B1515;
+    --alert-50: #9B151580;
 		--background: #171922;
 		--txt: #F0F4F8;
 		--modal-bg: #E1D6CAcc;
@@ -64,6 +66,7 @@
 
 	#social .button-icon {
 		filter: invert(1) brightness(2);
+    
 	}
 }
 
