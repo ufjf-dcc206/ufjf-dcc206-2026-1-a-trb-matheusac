@@ -4,44 +4,56 @@ class Modais extends HTMLElement {
 	}
 	constructor() {
 		super();
-		this.attachShadow({ mode: "open" });
-		this.template = document.createElement("template");
 
-		this.frase = "";
+		this.frase = "modal base";
+    this.fraseBtn = "fechar"
 		this.tipo = "";
 
 		this.build();
-		this.escutarEventos();
 	}
+
 	attributeChangedCallback(name, oldValue, newValue) {
 		if (name === "tipo") {
 			this.tipo = newValue;
+
 			if (newValue == "lose") {
-				this.frase = "você perdeu o jogo";
-				abrir(newValue);
-			}
-
-			if (newValue == "win") {
-				this.frase = "você ganhou o jogo";
-				abrir(newValue);
-			}
-
-			if (newValue == "restart") {
-				this.frase = "reiniciar o jogo?";
-				abrir(newValue);
+				this.frase = "Você <em>perdeu</em> o jogo.";
+				this.fraseBtn = "Fechar";
+				this.resetModal();
+			} 
+      else if (newValue == "win") {
+				this.frase = "Você <em>ganhou</em> o jogo.";
+				this.fraseBtn = "Fechar";
+				this.resetModal();
+			} 
+      else if (newValue == "restart") {
+				this.frase = "Reiniciar o jogo?";
+				this.fraseBtn = "Reiniciar";
+				this.resetModal();
 			}
 		}
-		// console.log(newValue)
+		console.log(newValue);
 	}
 
 	build() {
-		this.template.innerHTML = `
-      <div class='modal'>
-        <p>esse é um <em>modal</em> teste</p>
-        <button>tá bom</button>
-      </div>
-        
-      <style>
+		this.attachShadow({ mode: "open" });
+		this.setStyle();
+    this.createModal();
+		// this.escutarEventos();
+	}
+
+	setStyle() {
+		const globalStyle = document.createElement("style");
+		globalStyle.innerHTML += `
+      .close {
+      display: none;
+      pointer-events: none;
+      }
+    `;
+		document.head.appendChild(globalStyle);
+
+		const shadowStyle = document.createElement("style");
+		shadowStyle.innerHTML = `
         :host {
           display: flex;
           justify-content: center;
@@ -55,22 +67,24 @@ class Modais extends HTMLElement {
           top: 0;
           left: 0;
           
-          background: #dcdcdc80;
+          background: #47474780;
           align-content: center;
+
+          --em-color: grey;
           
         }
         .modal {
           min-width: 20vw;
           min-height: 18vh;
           padding: 1rem;
-
+  
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-
+  
           border-radius: 1.8rem;
-          background: #ababab;
+          background: #E1D6CA80;
           z-index: 6;
         }
         .modal p {
@@ -87,30 +101,45 @@ class Modais extends HTMLElement {
           filter: brightness(0.8);
         }
         em {
-          color: red;
+          color: var(--em-color);
           font-style: normal;
         }
-        
-      </style>
       `;
-
-		const globalStyle = document.createElement("style");
-		globalStyle.innerHTML = `
-      .close {
-      display: none;
-        pointer-events: none;
-      }
-    `;
-		document.head.appendChild(globalStyle);
-
-		this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+		this.shadowRoot.appendChild(shadowStyle);
 	}
+
+  createModal() {
+    const modal = document.createElement("div");
+		modal.innerHTML = `
+      <div class='modal'>
+        <p>${this.frase}</p>
+        <button>${this.fraseBtn}</button>
+      </div>
+    `;
+		this.shadowRoot.appendChild(modal);
+    
+    const color = this.tipo === "lose" ? "#9B1515" : this.tipo === "win" ? "#299736" : "#171922";
+    this.shadowRoot.host.style.setProperty("--em-color", color);
+    
+    
+    this.escutarEventos();
+  }
+
+	resetModal() {
+		this.shadowRoot.host.classList.remove("close")
+    const modal = this.shadowRoot.querySelector(".modal");
+    modal.remove();
+    this.createModal();
+	}
+
+	setModalInfo() {}
+
 	escutarEventos() {
 		const btn = this.shadowRoot.querySelector("button");
-		const modalContainer = document.querySelector("modais-jogo");
+		const modalContainer = this.shadowRoot.host;
 
 		btn.addEventListener("click", () => {
-			modalContainer.classList.toggle("close");
+			modalContainer.classList.add("close");
 		});
 	}
 }
