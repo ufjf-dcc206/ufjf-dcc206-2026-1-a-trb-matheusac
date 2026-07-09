@@ -39,14 +39,15 @@ class Modais extends HTMLElement {
 		this.attachShadow({ mode: "open" });
 		this.setStyle();
     this.createModal();
+    this.shadowRoot.host.classList.add("close");
 		// this.escutarEventos();
 	}
 
 	setStyle() {
 		const globalStyle = document.createElement("style");
 		globalStyle.innerHTML += `
-      .close {
-      display: none;
+      modais-jogo.close {
+      opacity: 0;
       pointer-events: none;
       }
     `;
@@ -71,6 +72,7 @@ class Modais extends HTMLElement {
           align-content: center;
 
           --em-color: grey;
+          transition: all 120ms ease;
           
         }
         .modal {
@@ -84,7 +86,7 @@ class Modais extends HTMLElement {
           justify-content: center;
   
           border-radius: 1.8rem;
-          background: #E1D6CA80;
+          background: #E1D6CA;
           z-index: 6;
         }
         .modal p {

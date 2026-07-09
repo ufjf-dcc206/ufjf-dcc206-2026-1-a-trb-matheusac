@@ -395,17 +395,21 @@ export class CampoMinado extends HTMLElement {
 	// finais de jogo
 
 	gameWin() {
-		setTimeout(() => {
-			alert("Parabéns! Você venceu! :)");
-		}, 120);
+		const modais = document.querySelector("modais-jogo");
+		// setTimeout(() => {
+			// alert("Parabéns! Você venceu! :)");
+			modais.setAttribute("tipo", "win");
+		// }, 120);
 		const jogo = this.shadowRoot.querySelector("#grid");
 		jogo.style.pointerEvents = "none";
 	}
 
 	gameOver() {
-		setTimeout(() => {
-			alert("Você perdeu! :(");
-		}, 120);
+		const modais = document.querySelector("modais-jogo");
+		// setTimeout(() => {
+			// alert("Você perdeu! :(");
+			modais.setAttribute("tipo", "lose");
+		// }, 120);
 
 		const jogo = this.shadowRoot.querySelector("#grid");
 		jogo.style.pointerEvents = "none";
@@ -420,15 +424,6 @@ export class CampoMinado extends HTMLElement {
 			cell.appendChild(icon);
 		});
 
-		// let modal = this.shadowRoot.querySelector("modais-jogo");
-
-		// if (!modal) {
-		// 	modal = document.createElement("modais-jogo");
-		// 	modal.addEventListener("restart-game", () => this.resetGame());
-		// 	this.shadowRoot.appendChild(modal);
-		// }
-
-		// modal.setAttribute("tipo", tipo);
 	}
 }
 
