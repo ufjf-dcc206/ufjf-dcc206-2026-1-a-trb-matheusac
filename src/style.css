@@ -12,7 +12,7 @@
 		rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
 	--cell: #c0c0c0;
-  --dig: #c0c0c080;
+	--dig: #c0c0c080;
 	--safe: #54c862;
 	--alert: #e04747;
 	--alert-50: #e0474780;
@@ -27,8 +27,8 @@
 	font: 18px/145% var(--sans);
 	letter-spacing: 0.18px;
 	color-scheme: light dark;
-	color: var(--text);
-	background: var(--bg);
+	color: var(--txt);
+	background: var(--background);
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -55,10 +55,10 @@
 			rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
 
 		--cell: #8E8E8E;
-    --dig: #8E8E8E80;
+    	--dig: #8E8E8E80;
 		--safe: #299736;
 		--alert: #9B1515;
-    --alert-50: #9B151580;
+    	--alert-50: #9B151580;
 		--background: #171922;
 		--txt: #F0F4F8;
 		--modal-bg: #E1D6CAcc;
