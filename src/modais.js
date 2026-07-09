@@ -1,6 +1,6 @@
 class Modais extends HTMLElement {
 	static get observedAttributes() {
-		return ["frase", "tipo"]; // vou usar dps
+		return ["tipo"];
 	}
 	constructor() {
 		super();
@@ -17,12 +17,12 @@ class Modais extends HTMLElement {
 			this.tipo = newValue;
 
 			if (newValue == "lose") {
-				this.frase = "Você <em>perdeu</em> o jogo.";
+				this.frase = "Que pena!<br>Você <em>perdeu</em> o jogo.";
 				this.fraseBtn = "Fechar";
 				this.resetModal();
 			} 
       else if (newValue == "win") {
-				this.frase = "Você <em>ganhou</em> o jogo.";
+				this.frase = "Parabéns!<br>Você <em>ganhou</em> o jogo.";
 				this.fraseBtn = "Fechar";
 				this.resetModal();
 			} 
@@ -62,8 +62,8 @@ class Modais extends HTMLElement {
           
           position: absolute;
           z-index: 3;
-          width: 100vw;
-          height: 100vh;
+          width: 100%;
+          height: 100%;
           
           top: 0;
           left: 0;
@@ -78,7 +78,7 @@ class Modais extends HTMLElement {
         .modal {
           min-width: 20vw;
           min-height: 18vh;
-          padding: 1rem;
+          padding: 1rem 2rem;
   
           display: flex;
           flex-direction: column;
@@ -86,17 +86,22 @@ class Modais extends HTMLElement {
           justify-content: center;
   
           border-radius: 1.8rem;
-          background: #E1D6CA;
+          background: var(--txt);
           z-index: 6;
         }
         .modal p {
           font-size: 1.6rem;
+          font-weight: 500;
+          color: var(--background);
+          text-align: center;
         }
         .modal button {
           border: none;
           border-radius: 1.4rem;
-          font-size: 1.2rem;
+          font-size: 1rem;
           padding: 0.6rem 0.8rem;
+          background: var(--background);
+          color: var(--txt);
         }
         button:hover {
           cursor: pointer;
